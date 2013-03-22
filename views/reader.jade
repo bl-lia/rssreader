@@ -1,0 +1,33 @@
+doctype 5
+heml
+    head
+        link(rel='stylesheet', href="/stylesheets/reader.css")
+        script(type='text/javascript', src='/bootplate/enyo/enyo.js')
+        script(type='text/javascript', src='/bootplate/package.js')
+        script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
+        script(type='text/javascript', src='/socket.io/socket.io.js')
+        script(type='text/javascript', src='/javascripts/reader.js')
+        script(type='text/javascript')
+            var socket = io.connect('http://localhost:3000');
+            var app = new App();
+
+            socket.on('load feeds done', function(data){
+                console.log('load feeds done');
+                app.$.feeds.refreshList(data.feeds);
+            });
+
+            socket.on('add feed done', function(){
+                console.log('add feed done');
+                socket.emit('load feeds');
+            });
+
+            socket.on('load feed articles done', function(data){
+                console.log('load feed articles done');
+                app.$.articles.refreshItem(data.articles);
+            });
+
+            socket.emit('load feeds');
+    body
+        script
+            app.write();
+
