@@ -1,3 +1,11 @@
 .panels > * {
     width: 320px;
 }
+
+.expandable .description {
+    display: none;
+}
+
+.expandable-selected .description {
+    
+}

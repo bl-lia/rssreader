@@ -56,6 +56,10 @@ Reader.addFeed = function(url, callback){
                     xmlUrl: meta.xmlUrl
                 });
                 
+                articles.forEach(function(article){
+                    feed.item.push(article);
+                });
+                
                 console.log('Add feed. %s - %s - %s', meta.title, meta.link, meta.xmlUrl);
                 
                 feed.save(function(){

@@ -49,14 +49,14 @@ socketio.listen(app.listen(app.get('port')), function(){
     });
     
     socket.on('load feed articles', function(data){
-        console.log('Call load feed articles');
+        console.log('Call load feed articles. url:%s', data.url);
         events.loadFeedArticles(data.url, function(articles){
             socket.emit('load feed articles done', {articles: articles});
         });
     });
     
     socket.on('add feed', function(data){
-        console.log('Call add feed');
+        console.log('Call add feed. url:%s', data.url);
         events.addFeed(data.url, function(feed){
             socket.emit('add feed done', {feed: feed});
         });

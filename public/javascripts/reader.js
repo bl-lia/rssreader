@@ -89,6 +89,7 @@ enyo.kind({
             kind: "List",
             count: 0,
             onSetupItem: "setupItem",
+            multiSelect: true,
             components: [
                 {kind: "reader.fragment.Article", name: "article", ontap: "itemTap"},
             ]
@@ -101,16 +102,10 @@ enyo.kind({
         this.$.article.$.title.setContent(this.articles[i].title);
         this.$.article.$.date.setContent(this.articles[i].date);
         this.$.article.$.description.setContent(this.articles[i].description);
-        this.$.article.$.description.hide();
+        
+        this.$.article.setSelected(inSender.isSelected(i));
     },
     itemTap: function(inSender, inEvent){
-        var i = inEvent.index;
-        var link = this.articles[i].link;
-        
-        //window.open(link, '_blank');
-        
-        console.log(i);
-        this.$.article.$.description.setShowing(!this.$.article.$.description.showing);
     },
     refreshItem: function(data){
         this.articles = data;
@@ -121,12 +116,16 @@ enyo.kind({
 
 enyo.kind({
     name: "reader.fragment.Article",
-    classes: "enyo-border-box",
+    classes: "enyo-border-box expandable",
     components: [
         {name: "date"},
         {name: "title"},
-        {name: "description", allowHtml: true}
-    ]
+        {name: "description", classes: "description", allowHtml: true}
+    ],
+    setSelected: function(inSelected){
+        this.addRemoveClass("expandable", !inSelected);
+        this.addRemoveClass("expandable-selected", inSelected);
+    }
 });
 
 enyo.kind({
