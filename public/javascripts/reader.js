@@ -67,9 +67,9 @@ enyo.kind({
     },
     itemTap: function(inSender, inEvent){
         var i = inEvent.index;
-        var xmlUrl = this.feeds[i].xmlUrl;
+        var feedId = this.feeds[i]._id;
         
-        socket.emit('load feed articles', {url: xmlUrl});
+        socket.emit('load feed articles', {id: feedId});
     },
     refreshList: function(data){
         this.feeds = data;

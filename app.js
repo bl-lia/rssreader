@@ -49,8 +49,8 @@ socketio.listen(app.listen(app.get('port')), function(){
     });
     
     socket.on('load feed articles', function(data){
-        console.log('Call load feed articles. url:%s', data.url);
-        events.loadFeedArticles(data.url, function(articles){
+        console.log('Call load feed articles. feedId:%s', data.id);
+        events.loadFeedArticles(data.id, function(articles){
             socket.emit('load feed articles done', {articles: articles});
         });
     });

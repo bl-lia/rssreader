@@ -51,31 +51,56 @@ Reader.addFeed = function(url, callback){
             else{
                 var Feed = mongoose.model('Feed');
                 var feed = new Feed({
+                    _id: new mongoose.Types.ObjectId,
                     name: meta.title,
                     link: meta.link,
-                    xmlUrl: meta.xmlUrl
-                });
-                
-                articles.forEach(function(article){
-                    feed.item.push(article);
+                    xmlUrl: meta.xmlUrl !== null ? meta.xmlUrl : url
                 });
                 
                 console.log('Add feed. %s - %s - %s', meta.title, meta.link, meta.xmlUrl);
                 
-                feed.save(function(){
-                    console.log('Success to save feed.');
-                    callback(feed);
+                feed.save(function(err, f){
+                    if(err) console.error(err);
+                    else{
+                        console.log('Success to save feed.');
+                        callback(f, articles);
+                    }
                 });
             }
         });
 };
 
-Reader.getFeedArticles = function(url, callback){
+Reader.addArticles = function(feed, articles, callback){
+    console.log('reader.js:Reader.addArticles:');
+    articles.forEach(function(article){
+        var Article = mongoose.model('Article');
+        var a = new Article({
+            feedId:         feed._id,
+            date:           article.date,
+            title:          article.title,
+            description:    article.description,
+            summary:        article.summary,
+            link:           article.link
+        });
+        
+        a.save();
+    });
+};
+
+Reader.getFeedArticles = function(feedId, callback){
+    console.log('reader.js:Reader.getFeedArticles:feedId=%s', feedId);
+    var Article = mongoose.model('Article');
+    Article.find({feedId: new mongoose.Types.ObjectId(feedId)}, callback);
+};
+
+Reader.getNewArticles = function(url, callback){
     feedparser.parseUrl(url,
         function(error, meta, articles){
             if(error) console.error(error);
             else callback(articles);
         });
 };
+
+
 
 exports = module.exports = Reader;

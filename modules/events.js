@@ -9,14 +9,15 @@ Events.loadFeeds = function(callback){
     });
 };
 
-Events.loadFeedArticles = function(url, callback){
-    reader.getFeedArticles(url, function(articles){
+Events.loadFeedArticles = function(feedId, callback){
+    reader.getFeedArticles(feedId, function(err, articles){
        callback(articles); 
     });
 };
 
 Events.addFeed = function(url, callback){
-    reader.addFeed(url, function(feed){
+    reader.addFeed(url, function(feed, articles){
+        reader.addArticles(feed, articles);
         callback(feed);
     });
 };
