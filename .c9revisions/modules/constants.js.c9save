@@ -1,0 +1,3 @@
+{"ts":1364199640196,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
+{"contributors":[],"silentsave":false,"ts":1364199674058,"patch":[[{"diffs":[[1,"var constants;\n\n"]],"start1":0,"start2":0,"length1":0,"length2":16}]],"length":16,"saved":false}
+{"contributors":[],"silentsave":false,"ts":1364199777341,"patch":[[{"diffs":[[0,"var "],[-1,"c"],[1,"C"],[0,"onst"]],"start1":0,"start2":0,"length1":9,"length2":9},{"diffs":[[0,"tants;\n\n"],[1,"Constants.feedtype = {\n    'feed'  : 'feed',\n    'folder': 'folder'\n};\n\nexports = module.exports = Constants;\n"]],"start1":8,"start2":8,"length1":8,"length2":118}]],"length":126,"saved":false}

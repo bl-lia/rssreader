@@ -2,6 +2,37 @@
     width: 320px;
 }
 
+.panel-nav {
+    background-color: gray;
+}
+
+.list-feeds-list {
+    min-width: 300px;
+    max-width: 600px;
+	margin: auto;
+	background-color: #eee;
+}
+
+.list-feeds-item {
+    border: 1px solid silver;
+    padding: 18px;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.list-articles-list {
+}
+
+.list-articles-item {
+    border: 1px solid gray;
+    padding: 18px;
+    font-size: 14px;
+}
+
+.list-feeds-item-selected {
+    background-color: #c4e3fe;
+}
+
 .expandable .description {
     display: none;
 }

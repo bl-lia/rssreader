@@ -13,10 +13,17 @@ var Article = new Schema({
 
 var Feed = new Schema({
     _id:        Schema.Types.ObjectId,
+    tagId:      Schema.Types.ObjectId,
     name:       String,
     link:       String,
     xmlUrl:     String
 });
 
+var Tag = new Schema({
+    _id:  Schema.Types.ObjectId,
+    name: String
+});
+
 mongoose.model('Feed', Feed);
 mongoose.model('Article', Article);
+mongoose.model('Tag', Tag);

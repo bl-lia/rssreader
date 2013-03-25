@@ -10,7 +10,7 @@ enyo.kind({
                 {
                     kind: "Panels",
                     name: "navPanel",
-                    classes: "panels enyo-fit",
+                    classes: "panels enyo-fit panel-nav",
                     components: [
                         {kind: "reader.fragment.Feeds", name: "feeds"}
                     ]
@@ -46,11 +46,13 @@ enyo.kind({
         {
             name: "list",
             kind: "List",
+            classes: "list-feeds-list",
             count: 0,
             onSetupItem: "setupItem",
             components: [
                 {
                     name: "item",
+                    classes: "list-feeds-item",
                     ontap: "itemTap",
                     components: [
                         {
@@ -63,7 +65,10 @@ enyo.kind({
     ],
     feeds: [],
     setupItem: function(inSender, inEvent){
+        var i = inEvent.index;
+        
         this.$.name.setContent(this.feeds[inEvent.index].name);
+        this.$.item.addRemoveClass("list-feeds-item-selected", inSender.isSelected(i));
     },
     itemTap: function(inSender, inEvent){
         var i = inEvent.index;
@@ -87,6 +92,7 @@ enyo.kind({
         {
             name: "list",
             kind: "List",
+            classes: "list-articles-list",
             count: 0,
             onSetupItem: "setupItem",
             multiSelect: true,
@@ -116,7 +122,7 @@ enyo.kind({
 
 enyo.kind({
     name: "reader.fragment.Article",
-    classes: "enyo-border-box expandable",
+    classes: "enyo-border-box expandable list-articles-item",
     components: [
         {name: "date"},
         {name: "title"},

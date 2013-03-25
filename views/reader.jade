@@ -8,7 +8,7 @@ heml
         script(type='text/javascript', src='/socket.io/socket.io.js')
         script(type='text/javascript', src='/javascripts/reader.js')
         script(type='text/javascript')
-            var socket = io.connect('http://localhost:3000');
+            var socket = io.connect('http://192.168.100.93:3000');
             var app = new App();
 
             socket.on('load feeds done', function(data){
