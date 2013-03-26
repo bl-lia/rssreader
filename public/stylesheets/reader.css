@@ -50,3 +50,7 @@
 .list-article-date {
     text-align: right;
 }
+
+.toolbar {
+    height: 100px;
+}

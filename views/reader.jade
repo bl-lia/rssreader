@@ -10,7 +10,7 @@ heml
         script(type='text/javascript', src='/javascripts/moment.js')
         script(type='text/javascript', src='/javascripts/reader.js')
         script(type='text/javascript')
-            var socket = io.connect('http://192.168.100.93:3000');
+            var socket = io.connect(window.location.protocol + '//' + window.location.host);
             var app = new App();
 
             socket.on('load feeds done', function(data){

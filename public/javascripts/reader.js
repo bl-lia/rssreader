@@ -21,14 +21,20 @@ enyo.kind({
                     classes: "panels enyo-fit",
                     components: [
                         {
-                            kind: "Panels",
-                            name: "articlePanel",
-                            fit: false,
-                            classes: "panels article-panel",
+                            kind: "FittableRows",
                             components: [
-                                {kind: "Scroller", name: "scroller", strategyKind: "TouchScrollStrategy", components: [
-                                    {kind: "reader.fragment.Articles", name: "articles"}
-                                ]}
+                                {kind: "reader.fragment.ArticleToolbar", name: "articleBar"},
+                                {
+                                    kind: "Panels",
+                                    name: "articlePanel",
+                                    classes: "panels article-panel",
+                                    fit: true,
+                                    components: [
+                                        {kind: "Scroller", name: "scroller", strategyKind: "TouchScrollStrategy", components: [
+                                            {kind: "reader.fragment.Articles", name: "articles"}
+                                        ]}
+                                    ]
+                                }
                             ]
                         }
                     ]
@@ -158,3 +164,35 @@ enyo.kind({
         socket.emit('add feed', {url: this.$.textArea.getValue()});
     }
 });
+
+enyo.kind({
+    name: "reader.fragment.ArticleToolbar",
+    kind: "onyx.Toolbar",
+    components: [
+        {name: "name"},
+        {
+            kind: "onyx.MenuDecorator",
+            components: [
+                {content: "menu"},
+                {kind: "onyx.Menu", components: [
+                    {
+                        name: "tagMenu",
+                        kind: "enyo.Scroller",
+                        defaultKind: "onyx.MenuItem",
+                        vertical: "auto",
+                        strategyKind: "TouchScrollStrategy",
+                        components: [
+                            {kind: "List", count: 3, onSetupItem: "setupItem", components: [
+                                {name: "name"}
+                            ]}
+                        ]
+                    }
+                ]}
+            ]
+        }
+    ],
+    setupItem: function(){
+        this.$.name.setContent("aaaa");
+    }
+});
+

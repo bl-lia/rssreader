@@ -5,3 +5,5 @@
 {"ts":1364280176085,"patch":[[{"diffs":[[0,"  title="],[1," "],[0,"rssreade"]],"start1":30,"start2":30,"length1":16,"length2":17}]],"length":1252,"saved":false}
 {"ts":1364280196568,"patch":[[{"diffs":[[0," title= "],[1,"\""],[0,"rssreade"]],"start1":31,"start2":31,"length1":16,"length2":17},{"diffs":[[0,"ssreader"],[1,"\""],[0,"\n       "]],"start1":41,"start2":41,"length1":16,"length2":17}]],"length":1254,"saved":false}
 {"contributors":[],"silentsave":false,"ts":1364283250186,"patch":[[{"diffs":[[0,"ket.io.js')\n"],[1,"        script(type='text/javascript', src='/javascripts/moment.js')\n"],[0,"        scri"]],"start1":415,"start2":415,"length1":24,"length2":93}]],"length":1323,"saved":false}
+{"contributors":[],"silentsave":false,"ts":1364296339027,"patch":[[{"diffs":[[0,"ect("],[-1,"'http://192.168.100.93"],[1,"window.location.protocol + '//' + window.location.hostname + '"],[0,":300"]],"start1":636,"start2":636,"length1":30,"length2":70}]],"length":1363,"saved":false}
+{"ts":1364296420932,"patch":[[{"diffs":[[0,"host"],[-1,"name + ':3000'"],[0,");\n "]],"start1":690,"start2":690,"length1":22,"length2":8}]],"length":1349,"saved":false}
