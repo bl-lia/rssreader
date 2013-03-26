@@ -23,9 +23,10 @@ enyo.kind({
                         {
                             kind: "Panels",
                             name: "articlePanel",
-                            classes: "panels enyo-fit article-panel",
+                            fit: false,
+                            classes: "panels article-panel",
                             components: [
-                                {kind: "Scroller", components: [
+                                {kind: "Scroller", name: "scroller", strategyKind: "TouchScrollStrategy", components: [
                                     {kind: "reader.fragment.Articles", name: "articles"}
                                 ]}
                             ]
@@ -87,15 +88,13 @@ enyo.kind({
     name: "reader.fragment.Articles",
     components: [
         {
-            content: "aaaa"
-        },
-        {
             name: "list",
             kind: "List",
             classes: "list-articles-list",
             count: 0,
             onSetupItem: "setupItem",
             multiSelect: true,
+            fit: true,
             components: [
                 {kind: "reader.fragment.Article", name: "article", ontap: "itemTap"},
             ]
@@ -105,10 +104,7 @@ enyo.kind({
     setupItem: function(inSender, inEvent){
         var i = inEvent.index;
         
-        this.$.article.$.title.setContent(this.articles[i].title);
-        this.$.article.$.date.setContent(this.articles[i].date);
-        this.$.article.$.description.setContent(this.articles[i].description);
-        
+        this.$.article.setArticle(this.articles[i]);
         this.$.article.setSelected(inSender.isSelected(i));
     },
     itemTap: function(inSender, inEvent){
@@ -124,13 +120,22 @@ enyo.kind({
     name: "reader.fragment.Article",
     classes: "enyo-border-box expandable list-articles-item",
     components: [
-        {name: "date"},
-        {name: "title"},
+        {name: "title", classes: "list-article-title"},
+        {name: "date", classes: "list-article-date"},
         {name: "description", classes: "description", allowHtml: true}
     ],
     setSelected: function(inSelected){
         this.addRemoveClass("expandable", !inSelected);
         this.addRemoveClass("expandable-selected", inSelected);
+    },
+    setArticle: function(article){
+        if(Math.abs(moment(article.date).diff(moment(), "days")) > 0)
+            this.$.date.setContent(moment(article.date).format("M/D"));
+        else
+            this.$.date.setContent(moment(article.date).format("HH:mm"));
+
+this.$.title.setContent(article.title);
+        this.$.description.setContent(article.description);
     }
 });
 

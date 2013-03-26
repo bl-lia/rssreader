@@ -1,11 +1,13 @@
 doctype 5
 heml
     head
+        title= "rssreader"
         link(rel='stylesheet', href="/stylesheets/reader.css")
         script(type='text/javascript', src='/bootplate/enyo/enyo.js')
         script(type='text/javascript', src='/bootplate/package.js')
         script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
         script(type='text/javascript', src='/socket.io/socket.io.js')
+        script(type='text/javascript', src='/javascripts/moment.js')
         script(type='text/javascript', src='/javascripts/reader.js')
         script(type='text/javascript')
             var socket = io.connect('http://192.168.100.93:3000');

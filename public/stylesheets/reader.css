@@ -20,7 +20,12 @@
 	font-weight: bold;
 }
 
+.list-feeds-item-selected {
+    background-color: #c4e3fe;
+}
+
 .list-articles-list {
+    
 }
 
 .list-articles-item {
@@ -29,14 +34,19 @@
     font-size: 14px;
 }
 
-.list-feeds-item-selected {
-    background-color: #c4e3fe;
-}
-
 .expandable .description {
     display: none;
 }
 
 .expandable-selected .description {
     
+}
+
+.list-article-title {
+    text-align: left;
+    float: left;
+}
+
+.list-article-date {
+    text-align: right;
 }
