@@ -15,6 +15,10 @@ Events.loadFeedArticles = function(feedId, callback){
     });
 };
 
+Events.fetchArticles = function(){
+    
+};
+
 Events.addFeed = function(url, callback){
     reader.addFeed(url, function(feed, articles){
         reader.addArticles(feed, articles);

@@ -4,3 +4,4 @@
 {"ts":1364027476491,"patch":[[{"diffs":[[0,"rticles("],[1,"feed, "],[0,"articles"]],"start1":461,"start2":461,"length1":16,"length2":22}]],"length":556,"saved":false}
 {"contributors":[],"silentsave":false,"ts":1364029305276,"patch":[[{"diffs":[[0,"cles = function("],[-1,"url"],[1,"feedId"],[0,", callback){\n   "]],"start1":226,"start2":226,"length1":35,"length2":38},{"diffs":[[0,"rticles("],[-1,"url"],[1,"feedId"],[0,", functi"]],"start1":280,"start2":280,"length1":19,"length2":22}]],"length":562,"saved":false}
 {"ts":1364029645412,"patch":[[{"diffs":[[0,"unction("],[1,"err, "],[0,"articles"]],"start1":297,"start2":297,"length1":16,"length2":21}]],"length":567,"saved":false}
+{"contributors":[],"silentsave":false,"ts":1364308833977,"patch":[[{"diffs":[[0,"    });\n};\n\n"],[1,"Events.fetchArticles = function(){\n    \n};\n\n"],[0,"Events.addFe"]],"start1":349,"start2":349,"length1":24,"length2":68}]],"length":611,"saved":false}

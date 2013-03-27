@@ -61,6 +61,10 @@ socketio.listen(app.listen(app.get('port')), function(){
             socket.emit('add feed done', {feed: feed});
         });
     });
+    
+    socket.on('refresh feed articles', function(feeds){
+        console.log('Call refresh feed articles.');
+    });
 });
 
 

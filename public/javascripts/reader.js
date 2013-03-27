@@ -189,10 +189,20 @@ enyo.kind({
                     }
                 ]}
             ]
+        },
+        {
+            name: "refreshButton",
+            kind: "onyx.Button",
+            content: "Refresh",
+            ontap: "refreshArticles"
         }
     ],
     setupItem: function(){
         this.$.name.setContent("aaaa");
+    },
+    refreshArticles: function(){
+        
     }
 });
+
 
