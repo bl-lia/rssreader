@@ -49,9 +49,9 @@ socketio.listen(app.listen(app.get('port')), function(){
     });
     
     socket.on('load feed articles', function(data){
-        console.log('Call load feed articles. feedId:%s', data.id);
-        events.loadFeedArticles(data.id, function(articles){
-            socket.emit('load feed articles done', {articles: articles});
+        console.log('Call load feed articles. feedId:%s', data.feed._id);
+        events.loadFeedArticles(data.feed._id, function(articles){
+            socket.emit('load feed articles done', {feed: data.feed, articles: articles});
         });
     });
     
@@ -62,8 +62,11 @@ socketio.listen(app.listen(app.get('port')), function(){
         });
     });
     
-    socket.on('refresh feed articles', function(feeds){
+    socket.on('refresh feed articles', function(data){
         console.log('Call refresh feed articles.');
+        events.fetchArticles(data.feed._id, function(articles){
+            socket.emit('refresh feed articles done', {feed: data.feed, articles: articles});
+        });
     });
 });
 

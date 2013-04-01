@@ -25,6 +25,13 @@ heml
 
             socket.on('load feed articles done', function(data){
                 console.log('load feed articles done');
+                console.log(data);
+                app.$.articleBar.setFeed(data.feed);
+                app.$.articles.refreshItem(data.articles);
+            });
+
+            socket.on('refresh feed articles done', function(data){
+                console.log('refresh feed articles done');
                 app.$.articles.refreshItem(data.articles);
             });
 

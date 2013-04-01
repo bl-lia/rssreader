@@ -28,10 +28,14 @@ enyo.kind({
                                     kind: "Panels",
                                     name: "articlePanel",
                                     classes: "panels article-panel",
+                                    arrangerKind: "CardArranger",
                                     fit: true,
                                     components: [
                                         {kind: "Scroller", name: "scroller", strategyKind: "TouchScrollStrategy", components: [
                                             {kind: "reader.fragment.Articles", name: "articles"}
+                                        ]},
+                                        {kind: "Scroller", components:[
+                                            {content: "aaaa"}
                                         ]}
                                     ]
                                 }
@@ -79,9 +83,8 @@ enyo.kind({
     },
     itemTap: function(inSender, inEvent){
         var i = inEvent.index;
-        var feedId = this.feeds[i]._id;
         
-        socket.emit('load feed articles', {id: feedId});
+        socket.emit('load feed articles', {feed: this.feeds[i]});
     },
     refreshList: function(data){
         this.feeds = data;
@@ -172,6 +175,7 @@ enyo.kind({
         {name: "name"},
         {
             kind: "onyx.MenuDecorator",
+            onSelect: "itemSelected",
             components: [
                 {content: "menu"},
                 {kind: "onyx.Menu", components: [
@@ -182,9 +186,8 @@ enyo.kind({
                         vertical: "auto",
                         strategyKind: "TouchScrollStrategy",
                         components: [
-                            {kind: "List", count: 3, onSetupItem: "setupItem", components: [
-                                {name: "name"}
-                            ]}
+                            {content: "aaaaa"},
+                            {content: "bbbbbb"}
                         ]
                     }
                 ]}
@@ -195,13 +198,34 @@ enyo.kind({
             kind: "onyx.Button",
             content: "Refresh",
             ontap: "refreshArticles"
+        },
+        {
+            name: "showTagsButton",
+            kind: "onyx.Button",
+            content: "Tags",
+            ontap: "showTags"
         }
     ],
-    setupItem: function(){
-        this.$.name.setContent("aaaa");
-    },
+    feed: null,
     refreshArticles: function(){
-        
+        if(this.feed !== null){
+            socket.emit('refresh feed articles', {feed: this.feed});
+        }
+    },
+    setFeed: function(feed){
+        this.feed = feed;
+    },
+    setupItem: function(inSender, inEvent){
+        this.$.menuitem.setContent("aaaa");
+    },
+    itemSelected: function(inSender, inEvnet){
+        this.$.tagMenu.destroyClientControls();
+        this.$.tagMenu.createComponent({content: "ccccc"});
+        this.$.tagMenu.createComponent({content: "ddddd"});
+        this.render();
+    },
+    showTags: function(){
+        console.log("aaa");
     }
 });
 

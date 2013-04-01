@@ -72,6 +72,9 @@ Reader.addFeed = function(url, callback){
 
 Reader.addArticles = function(feed, articles, callback){
     console.log('reader.js:Reader.addArticles:');
+    console.log('articles.length:%s', articles.length);
+    var arr = new Array();
+    var endCount = 0;
     articles.forEach(function(article){
         var Article = mongoose.model('Article');
         var a = new Article({
@@ -83,22 +86,39 @@ Reader.addArticles = function(feed, articles, callback){
             link:           article.link
         });
         
-        a.save();
+        a.save(function(err, a){
+            if(err) console.error(err);
+            else{
+                arr.push(a);
+                endCount++;
+                if(endCount == articles.length)
+                    callback(arr);
+            }
+        });
     });
 };
 
-Reader.getFeedArticles = function(feedId, callback){
+Reader.getFeedArticles = function(feedId, limit, callback){
     console.log('reader.js:Reader.getFeedArticles:feedId=%s', feedId);
+    if('number' != typeof limit){
+        limit = 30;
+    }
     var Article = mongoose.model('Article');
-    Article.find({feedId: new mongoose.Types.ObjectId(feedId)}, callback);
+    Article.find({feedId: new mongoose.Types.ObjectId(feedId)})
+            .sort({date: 'desc'})
+            .limit(limit)
+            .exec(callback);
 };
 
-Reader.getNewArticles = function(url, callback){
-    feedparser.parseUrl(url,
-        function(error, meta, articles){
-            if(error) console.error(error);
-            else callback(articles);
-        });
+Reader.getNewArticles = function(feedId, callback){
+    var Feed = mongoose.model('Feed');
+    Feed.findById(new mongoose.Types.ObjectId(feedId), function(err, feed){
+        console.log(feed);
+        if(feed.xmlUrl !== null)
+            feedparser.parseUrl(feed.xmlUrl, function(err, meta, articles){
+                callback(err, meta, articles, feed);
+            });
+    });
 };
 
 
