@@ -55,6 +55,13 @@ socketio.listen(app.listen(app.get('port')), function(){
         });
     });
     
+    socket.on('add tag', function(tagname){
+        console.log('Call add tag. tagname:%s', tagname);
+        events.addTag(tagname, function(tag){
+            socket.emit('add tag done', {tag: tag});
+        });
+    });
+    
     socket.on('add feed', function(data){
         console.log('Call add feed. url:%s', data.url);
         events.addFeed(data.url, function(feed){

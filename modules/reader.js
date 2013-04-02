@@ -44,6 +44,23 @@ Reader.load = function(callback){
     });
 };
 
+Reader.addTag = function(tagname, callback){
+    console.log('reader.js:Reader.addTag');
+    var Tag = mongoose.model('Tag');
+    var tag = new Tag({
+        name: tagname
+    });
+    
+    tag.save(function(err, t){
+        if(err) console.err(err);
+        else{
+            console.log('Success to save tag.');
+            if(callback !== undefined)
+                callback(t);
+        }
+    });
+};
+
 Reader.addFeed = function(url, callback){
     feedparser.parseUrl(url,
         function(error, meta, articles){
@@ -92,7 +109,8 @@ Reader.addArticles = function(feed, articles, callback){
                 arr.push(a);
                 endCount++;
                 if(endCount == articles.length)
-                    callback(arr);
+                    if(callback !== undefined)
+                        callback(arr);
             }
         });
     });

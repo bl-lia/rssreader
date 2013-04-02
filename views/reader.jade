@@ -8,7 +8,7 @@ heml
         script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
         script(type='text/javascript', src='/socket.io/socket.io.js')
         script(type='text/javascript', src='/javascripts/moment.js')
-        script(type='text/javascript', src='/javascripts/reader.js')
+        script(type='text/javascript', src='/javascripts/rssreader/package.js')
         script(type='text/javascript')
             var socket = io.connect(window.location.protocol + '//' + window.location.host);
             var app = new App();
@@ -26,8 +26,8 @@ heml
             socket.on('load feed articles done', function(data){
                 console.log('load feed articles done');
                 console.log(data);
-                app.$.articleBar.setFeed(data.feed);
-                app.$.articles.refreshItem(data.articles);
+                app.setFeed(data.feed);
+                app.refreshArticle(data.articles);
             });
 
             socket.on('refresh feed articles done', function(data){

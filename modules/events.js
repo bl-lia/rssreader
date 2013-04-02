@@ -43,6 +43,13 @@ Events.fetchArticles = function(feedId, callback){
     });
 };
 
+Events.addTag = function(tagname, callback){
+    reader.addTag(tagname, function(tag){
+        if(callback !== undefined)
+            callback(tag);
+    });
+};
+
 Events.addFeed = function(url, callback){
     reader.addFeed(url, function(feed, articles){
         reader.addArticles(feed, articles);
