@@ -2,6 +2,15 @@
     width: 320px;
 }
 
+.panel-collapsible > * {
+    /*min-width: 250px;*/
+    /*max-width: 250px;*/
+}
+
+.panel-main {
+    max-width: 100%;
+}
+
 .panel-nav {
     background-color: gray;
 }
@@ -25,7 +34,7 @@
 }
 
 .list-articles-list {
-    
+    background-color: #eee;
 }
 
 .list-articles-item {
@@ -34,11 +43,11 @@
     font-size: 14px;
 }
 
-.expandable .description {
+.expandable .list-article-content {
     display: none;
 }
 
-.expandable-selected .description {
+.expandable-selected .list-article-content {
     
 }
 

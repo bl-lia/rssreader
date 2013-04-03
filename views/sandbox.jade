@@ -1,0 +1,27 @@
+doctype 5
+heml
+    head
+        title= "rssreader"
+        link(rel='stylesheet', href="/stylesheets/reader.css")
+        script(type='text/javascript', src='/bootplate/enyo/enyo.js')
+        script(type='text/javascript', src='/bootplate/package.js')
+        script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
+        script(type='text/javascript', src='/socket.io/socket.io.js')
+        script(type='text/javascript', src='/javascripts/moment.js')
+        script(type='text/javascript', src='/javascripts/sandbox.js')
+        script(type='text/javascript')
+            var app = new App();
+        style(type='text/css')
+            .collapsible > *{
+                min-width: 250px;
+            }
+            .panela{
+                background-color: blue;
+            }
+            .panelb{
+                background-color: green;
+            }
+    body
+        script
+            app.write();
+

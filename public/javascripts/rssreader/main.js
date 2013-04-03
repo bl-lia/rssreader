@@ -1,8 +1,5 @@
 enyo.kind({
     name: "reader.fragment.MainPanel",
-    kind: "Panels",
-    classes: "panels enyo-fit",
-    components: [{
         kind: "FittableRows",
         components: [
             {
@@ -21,8 +18,7 @@ enyo.kind({
                 ]
             },
             {kind: "reader.fragment.ArticleToolbar", name: "articleBar", onShowTagPanel: "showTagPanel"},
-        ]
-    }],
+        ],
     showTagPanel: function(){
         console.log("bbbb");
         if(this.$.articlePanel.index == 0)
@@ -113,5 +109,36 @@ enyo.kind({
     showTags: function(){
         console.log("aaa");
         this.doShowTagPanel();
+    }
+});
+
+enyo.kind({
+    name: "reader.fragment.Article",
+    classes: "enyo-border-box expandable list-articles-item",
+    components: [
+        {name: "title", classes: "list-article-title"},
+        {name: "date", classes: "list-article-date"},
+        {name: "content", classes: "list-article-content", components: [
+            {name: "contentTitle", tag: "a"},
+            {name: "description", classes: "description", allowHtml: true}
+        ]}
+    ],
+    article: "",
+    setSelected: function(inSelected){
+        this.addRemoveClass("expandable", !inSelected);
+        this.addRemoveClass("expandable-selected", inSelected);
+    },
+    setArticle: function(article){
+        this.article = article;
+        
+        if(Math.abs(moment(article.date).diff(moment(), "days")) > 0)
+            this.$.date.setContent(moment(article.date).format("M/D"));
+        else
+            this.$.date.setContent(moment(article.date).format("HH:mm"));
+
+        this.$.title.setContent(article.title);
+        this.$.contentTitle.setContent(article.title);
+        this.$.contentTitle.setAttribute("href", article.link);
+        this.$.description.setContent(article.description);
     }
 });

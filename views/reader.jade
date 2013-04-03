@@ -32,7 +32,7 @@ heml
 
             socket.on('refresh feed articles done', function(data){
                 console.log('refresh feed articles done');
-                app.$.articles.refreshItem(data.articles);
+                app.refreshArticle(data.articles);
             });
 
             socket.emit('load feeds');

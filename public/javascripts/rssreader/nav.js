@@ -1,6 +1,9 @@
 enyo.kind({
     name: "reader.fragment.Feeds",
     kind: "FittableRows",
+    events: {
+        onShowArticlepanel: ""
+    },
     components: [
         {
             kind: "FittableRows",
@@ -20,10 +23,10 @@ enyo.kind({
             ]
         },
         {components: [
-            {kind: "reader.fragment.NavigationToolbar", onTogglePanel: "togglePanel", onShowAddPanel: "showAddPanel"},
+            {kind: "reader.fragment.NavigationToolbar", onTogglePanel: "togglePanel", onShowAddPanel: "showAddPanel", onShowArticles: "showArticles"},
         ]},
         {
-            name: "addPopup", kind: "reader.fragment.AddPopup"
+            name: "addPopup", kind: "reader.fragment.AddPopup", onTapAdd: "tapAdd"
         }
     ],
     refreshList: function(data){
@@ -31,7 +34,7 @@ enyo.kind({
         this.$.feedlist.refreshList();
     },
     togglePanel: function(){
-        if(this.$.feedTagPanel.index == 0)
+        if(this.$.feedTagPanel.index === 0)
             this.$.feedTagPanel.next();
         else
             this.$.feedTagPanel.previous();
@@ -42,6 +45,16 @@ enyo.kind({
     showAddPanel: function(){
         console.log("aaa");
         this.$.addPopup.show();
+    },
+    tapAdd: function(inSender, inEvent){
+        if(this.$.feedTagPanel.index === 0){
+            socket.emit('add feed', {url: inEvent.value});
+        }else{
+            console.log(inEvent.value);
+        }
+    },
+    showArticles: function(inSender, inEvent){
+        this.doShowArticlepanel();
     }
 });
 
@@ -150,17 +163,22 @@ enyo.kind({
     classes: "toolbar",
     events: {
         onTogglePanel: "",
-        onShowAddPanel: ""
+        onShowAddPanel: "",
+        onShowArticles: ""
     },
     components: [
         {kind: "onyx.Button", content: "+", ontap: "test"},
         {kind: "onyx.Button", content: "<>", ontap: "togglePanel"},
+        {kind: "onyx.Button", content: "<", ontap: "showArticles"},
     ],
     togglePanel: function(){
         this.doTogglePanel();
     },
     test: function(){
         this.doShowAddPanel();
+    },
+    showArticles: function(){
+        this.doShowArticles();
     }
 });
 
@@ -174,12 +192,20 @@ enyo.kind({
 enyo.kind({
     name: "reader.fragment.AddPopup",
     kind: "onyx.Popup",
+    events: {
+        onTapAdd: ""
+    },
     centered: true,
     modal: true,
     floating: true,
     components: [
         {kind: "onyx.Input", placeholder: "Feed URL"},
-        {kind: "onyx.Button", content: "Add"}
-    ]
+        {kind: "onyx.Button", content: "Add", ontap: "tapAdd"}
+    ],
+    tapAdd: function(){
+        this.doTapAdd({value: this.$.input.getValue()});
+        this.$.input.setValue("");
+        this.hide();
+    }
 });
 
