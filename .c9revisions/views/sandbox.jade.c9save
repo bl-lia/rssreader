@@ -11,3 +11,5 @@
 {"ts":1364977242684,"patch":[[{"diffs":[[0,"new "],[-1,"enyo.sample.PanelsSample"],[1,"App"],[0,"();\r"]],"start1":639,"start2":639,"length1":32,"length2":11}]],"length":975,"saved":false}
 {"ts":1364977665230,"patch":[[{"diffs":[[0,"new "],[-1,"App"],[1,"collapsiblePanels"],[0,"();\r"]],"start1":639,"start2":639,"length1":11,"length2":25}]],"length":989,"saved":false}
 {"ts":1364977706699,"patch":[[{"diffs":[[0,"new "],[-1,"collapsiblePanels"],[1,"App"],[0,"();\r"]],"start1":639,"start2":639,"length1":25,"length2":11}]],"length":975,"saved":false}
+{"contributors":[],"silentsave":false,"ts":1365049536089,"patch":[[{"diffs":[[0,"          }\r"],[1,"\n\r\n            @media all and (max-width:800px) {\r\n                .collapsible > * {\r\n                    max-width: 100%;\r\n                    min-width: 100%;\r\n                }\r\n            }\r"],[0,"\n    body\r\n "]],"start1":908,"start2":908,"length1":24,"length2":220}]],"length":1171,"saved":false}
+{"ts":1365050000195,"patch":[[{"diffs":[[0,"dth:"],[-1,"8"],[1,"10"],[0,"00px"]],"start1":957,"start2":957,"length1":9,"length2":10}]],"length":1172,"saved":false}

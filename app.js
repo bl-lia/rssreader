@@ -49,6 +49,13 @@ socketio.listen(app.listen(app.get('port')), function(){
         });
     });
     
+    socket.on('load tags', function(){
+        console.log('Call load tags');
+        events.loadTags(function(tags){
+            socket.emit('load tags done', {tags: tags});
+        });
+    });
+    
     socket.on('load feed articles', function(data){
         console.log('Call load feed articles. feedId:%s', data.feed._id);
         events.loadFeedArticles(data.feed._id, function(articles){
@@ -56,9 +63,9 @@ socketio.listen(app.listen(app.get('port')), function(){
         });
     });
     
-    socket.on('add tag', function(tagname){
-        console.log('Call add tag. tagname:%s', tagname);
-        events.addTag(tagname, function(tag){
+    socket.on('add tag', function(tag){
+        console.log('Call add tag. tagname:%s', tag.name);
+        events.addTag(tag.name, function(tag){
             socket.emit('add tag done', {tag: tag});
         });
     });

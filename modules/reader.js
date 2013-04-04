@@ -44,6 +44,16 @@ Reader.load = function(callback){
     });
 };
 
+Reader.loadTags = function(callback){
+    console.log('/modules/reader.js:Call Reader.loadTag');
+    var Tag = mongoose.model('Tag');
+    Tag.find(function(err, tags){
+        if(err) throw err;
+        else
+            if(callback !== undefined) callback(tags);
+    });
+};
+
 Reader.addTag = function(tagname, callback){
     console.log('reader.js:Reader.addTag');
     var Tag = mongoose.model('Tag');

@@ -15,12 +15,22 @@ heml
 
             socket.on('load feeds done', function(data){
                 console.log('load feeds done');
-                app.$.feeds.refreshList(data.feeds);
+                app.refreshFeeds(data.feeds);
+            });
+
+            socket.on('load tags done', function(data){
+                console.log('load tags done');
+                app.refreshTags(data.tags);
             });
 
             socket.on('add feed done', function(){
                 console.log('add feed done');
                 socket.emit('load feeds');
+            });
+
+            socket.on('add tag done', function(){
+                console.log('add tag done');
+                socket.emit('load tags');
             });
 
             socket.on('load feed articles done', function(data){
@@ -36,6 +46,7 @@ heml
             });
 
             socket.emit('load feeds');
+            socket.emit('load tags');
     body
         script
             app.write();

@@ -1,4 +1,25 @@
 enyo.kind({
+    name: "reader.fragment.NavPanel",
+    kind: "Panels",
+    events: {
+        onShowArticlePanel: "",
+    },
+    classes: "panels enyo-fit panel-nav",
+    components: [
+        {kind: "reader.fragment.Feeds", name: "feeds", onShowArticlepanel: "showArticlePanel"}
+    ],
+    refreshFeeds: function(feeds){
+        this.$.feeds.refreshList(feeds);
+    },
+    refreshTags: function(tags){
+        this.$.feeds.refreshTagList(tags);
+    },
+    showArticlePanel: function(inSender, inEvent){
+        this.doShowArticlePanel();
+    }
+});
+
+enyo.kind({
     name: "reader.fragment.Feeds",
     kind: "FittableRows",
     events: {
@@ -33,6 +54,10 @@ enyo.kind({
         this.$.feedlist.feeds = data;
         this.$.feedlist.refreshList();
     },
+    refreshTagList: function(data){
+        this.$.taglist.tags = data;
+        this.$.taglist.refreshList();
+    },
     togglePanel: function(){
         if(this.$.feedTagPanel.index === 0)
             this.$.feedTagPanel.next();
@@ -43,14 +68,18 @@ enyo.kind({
         socket.emit('add feed', {url: inEvent.url});
     },
     showAddPanel: function(){
-        console.log("aaa");
+        if(this.$.feedTagPanel.index === 0){
+            this.$.addPopup.setPlaceholder("Input Feed URL");
+        }else if(this.$.feedTagPanel.index === 1){
+            this.$.addPopup.setPlaceholder("Input Tag Name");
+        }
         this.$.addPopup.show();
     },
     tapAdd: function(inSender, inEvent){
         if(this.$.feedTagPanel.index === 0){
             socket.emit('add feed', {url: inEvent.value});
-        }else{
-            console.log(inEvent.value);
+        }else if(this.$.feedTagPanel.index === 1){
+            socket.emit('add tag', {name: inEvent.value});
         }
     },
     showArticles: function(inSender, inEvent){
@@ -199,13 +228,16 @@ enyo.kind({
     modal: true,
     floating: true,
     components: [
-        {kind: "onyx.Input", placeholder: "Feed URL"},
+        {kind: "onyx.Input"},
         {kind: "onyx.Button", content: "Add", ontap: "tapAdd"}
     ],
     tapAdd: function(){
         this.doTapAdd({value: this.$.input.getValue()});
         this.$.input.setValue("");
         this.hide();
+    },
+    setPlaceholder: function(placeholder){
+        this.$.input.setPlaceholder(placeholder);
     }
 });
 

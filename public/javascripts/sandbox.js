@@ -24,6 +24,7 @@ enyo.kind({
 enyo.kind({
     name: "collapsiblePanels",
     kind: "Panels",
+    fit: true,
     events: {
         onTapAAA: "",
         onTapBBB: "",

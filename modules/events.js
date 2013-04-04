@@ -10,6 +10,13 @@ Events.loadFeeds = function(callback){
     });
 };
 
+Events.loadTags = function(callback){
+    console.log('/modules/events.js:Call Events.loadTags');
+    reader.loadTags(function(tags){
+        if(callback !== undefined) callback(tags);
+    });
+};
+
 Events.loadFeedArticles = function(feedId, callback){
     reader.getFeedArticles(feedId, 30, function(err, articles){
        callback(articles); 

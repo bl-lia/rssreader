@@ -21,6 +21,13 @@ heml
             .panelb{
                 background-color: green;
             }
+
+            @media all and (max-width:1000px) {
+                .collapsible > * {
+                    max-width: 100%;
+                    min-width: 100%;
+                }
+            }
     body
         script
             app.write();

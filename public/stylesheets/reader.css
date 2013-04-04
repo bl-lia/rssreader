@@ -1,4 +1,8 @@
 .panels > * {
+    /*width: 320px;*/
+}
+
+.app-panels > * {
     width: 320px;
 }
 
@@ -25,7 +29,21 @@
 .list-feeds-item {
     border: 1px solid silver;
     padding: 18px;
-	font-size: 18px;
+    font-size: 18px;
+	font-weight: bold;
+}
+
+.list-tags-list {
+    min-width: 300px;
+    max-width: 600px;
+    margin: auto;
+	background-color: #eee;
+}
+
+.list-tags-item {
+    border: 1px solid silver;
+    padding: 18px;
+    font-size: 18px;
 	font-weight: bold;
 }
 
@@ -41,6 +59,10 @@
     border: 1px solid gray;
     padding: 18px;
     font-size: 14px;
+}
+
+.list-article-content {
+    padding-top: 18px;
 }
 
 .expandable .list-article-content {
@@ -60,3 +82,9 @@
     text-align: right;
 }
 
+@media all and (max-width: 800px) {
+    .app-panels > * {
+        min-width: 100%;
+        max-width: 100%;
+    }
+}
