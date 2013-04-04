@@ -111,3 +111,4 @@
 {"ts":1365060484565,"patch":[[{"diffs":[[0,"        "],[1,"this.$.contentPanel.refreshFeedTags(tags);"],[0,"\n    },\n"]],"start1":1251,"start2":1251,"length1":16,"length2":58}]],"length":1374,"saved":false}
 {"ts":1365060498172,"patch":[[{"diffs":[[0,"e(article);\n"],[1,"    },\n    refreshFeedTags: function(tags){\n        this\n"],[0,"    }\n});\n\ne"]],"start1":442,"start2":442,"length1":24,"length2":81}]],"length":1431,"saved":false}
 {"ts":1365060512576,"patch":[[{"diffs":[[0,"    this"],[1,".$.rootPanel.refreshFeedTags(tags);"],[0,"\n    }\n}"]],"start1":502,"start2":502,"length1":16,"length2":51}]],"length":1466,"saved":false}
+{"contributors":[],"silentsave":false,"ts":1365072711044,"patch":[[{"diffs":[[0,"reshTags(tags);\n"],[1,"        this.$.contentPanel.refreshTags(tags);\n"],[0,"    },\n    refre"]],"start1":1184,"start2":1184,"length1":32,"length2":79}]],"length":1513,"saved":false}

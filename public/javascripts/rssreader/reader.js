@@ -38,6 +38,7 @@ enyo.kind({
     },
     refreshTags: function(tags){
         this.$.navPanel.refreshTags(tags);
+        this.$.contentPanel.refreshTags(tags);
     },
     refreshArticle: function(article){
         this.$.contentPanel.refreshArticle(article);

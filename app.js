@@ -83,6 +83,13 @@ socketio.listen(app.listen(app.get('port')), function(){
             socket.emit('refresh feed articles done', {feed: data.feed, articles: articles});
         });
     });
+    
+    socket.on('update feed tags', function(data){
+        console.log('Call update feed tags');
+        events.updateFeedTags(data.feed._id, data.feed.feedTags, function(){
+            socket.emit('update feed tags done');
+        });
+    });
 });
 
 

@@ -13,7 +13,7 @@ var Article = new Schema({
 
 var Feed = new Schema({
     _id:        Schema.Types.ObjectId,
-    tagId:      Schema.Types.ObjectId,
+    feedTags:     [Schema.Types.ObjectId],
     name:       String,
     link:       String,
     xmlUrl:     String

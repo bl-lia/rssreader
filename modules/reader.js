@@ -45,13 +45,18 @@ Reader.load = function(callback){
 };
 
 Reader.loadTags = function(callback){
-    console.log('/modules/reader.js:Call Reader.loadTag');
+    console.log('/modules/reader.js:Call Reader.loadTags');
     var Tag = mongoose.model('Tag');
     Tag.find(function(err, tags){
         if(err) throw err;
         else
             if(callback !== undefined) callback(tags);
     });
+};
+
+Reader.loadFeedTags = function(callback){
+    console.log('/modules/reader.js:Call Reader.loadFeedTags');
+    var Tag = mongoose.model('Tag');
 };
 
 Reader.addTag = function(tagname, callback){
@@ -147,6 +152,19 @@ Reader.getNewArticles = function(feedId, callback){
                 callback(err, meta, articles, feed);
             });
     });
+};
+
+Reader.updateFeedTags = function(feedId, feedTags, callback){
+    var Feed = mongoose.model('Feed');
+    Feed.update(
+        {_id: new mongoose.Types.ObjectId(feedId)},
+        {feedTags: feedTags},
+        {safe: true},
+        function(err, numberAffected, raw){
+            if(err) console.error(err);
+            else
+               if(callback !== undefined) callback();
+        });
 };
 
 

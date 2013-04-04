@@ -17,9 +17,13 @@ Events.loadTags = function(callback){
     });
 };
 
+Events.loadFeedTags = function(callback){
+    console.log('/modules/events.js:Call Events.loadFeedTags');
+};
+
 Events.loadFeedArticles = function(feedId, callback){
     reader.getFeedArticles(feedId, 30, function(err, articles){
-       callback(articles); 
+       callback(articles);
     });
 };
 
@@ -62,6 +66,11 @@ Events.addFeed = function(url, callback){
         reader.addArticles(feed, articles);
         callback(feed);
     });
+};
+
+Events.updateFeedTags = function(feedId, feedTags, callback){
+    console.log('/modules/events.js:Call Events.updateFeedTags');
+    reader.updateFeedTags(feedId, feedTags, callback);
 };
 
 exports = module.exports = Events;

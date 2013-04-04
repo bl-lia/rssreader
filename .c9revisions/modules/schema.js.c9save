@@ -12,3 +12,6 @@
 {"ts":1364199922154,"patch":[[{"diffs":[[0,"rticle);"],[1,"\nmongoose.model('Tag', Tag);"]],"start1":599,"start2":599,"length1":8,"length2":36}]],"length":635,"saved":false}
 {"ts":1364199938464,"patch":[[{"diffs":[[0,"Types.ObjectId,\n"],[1,"    tagid:      Schema.Types.ObjectId,\n"],[0,"    name:       "]],"start1":372,"start2":372,"length1":32,"length2":71}]],"length":674,"saved":false}
 {"ts":1364199944320,"patch":[[{"diffs":[[0,"\n    tag"],[-1,"i"],[1,"I"],[0,"d:      "]],"start1":387,"start2":387,"length1":17,"length2":17}]],"length":674,"saved":false}
+{"contributors":[],"silentsave":false,"ts":1365070913646,"patch":[[{"diffs":[[0,"   tagId"],[1,"s"],[0,":      S"]],"start1":389,"start2":389,"length1":16,"length2":17}]],"length":675,"saved":false}
+{"ts":1365070918591,"patch":[[{"diffs":[[0,"tagIds:     "],[-1," "],[1,"["],[0,"Schema.Types"]],"start1":392,"start2":392,"length1":25,"length2":25},{"diffs":[[0,"a.Types.ObjectId"],[1,"]"],[0,",\n    name:     "]],"start1":410,"start2":410,"length1":32,"length2":33}]],"length":676,"saved":false}
+{"contributors":[],"silentsave":false,"ts":1365071338844,"patch":[[{"diffs":[[0,"    "],[-1,"tagId"],[1,"feedTag"],[0,"s:  "]],"start1":388,"start2":388,"length1":13,"length2":15}]],"length":678,"saved":false}

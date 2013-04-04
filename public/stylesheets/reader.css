@@ -82,6 +82,22 @@
     text-align: right;
 }
 
+.list-feedtags-item {
+    border: 1px solid gray;
+    padding: 18px;
+    font-size: 14px;
+    height: 80px;
+}
+
+.list-feedtags-item .checkbox {
+    float: left;
+}
+
+.list-feedtags-item .tagname {
+    float: left;
+    padding-left: 15px;
+}
+
 @media all and (max-width: 800px) {
     .app-panels > * {
         min-width: 100%;

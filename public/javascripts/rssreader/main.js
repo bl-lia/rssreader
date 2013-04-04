@@ -12,7 +12,7 @@ enyo.kind({
                 {kind: "Scroller", name: "scroller", strategyKind: "TouchScrollStrategy", components: [
                     {name: "articles", kind: "reader.fragment.Articles"}
                 ]},
-                {kind: "Scroller", components:[
+                {kind: "Scroller", strategyKind: "TouchScrollStrategy", components:[
                     {name: "feedTags", kind: "reader.fragment.FeedTags"}
                 ]}
             ]
@@ -35,6 +35,9 @@ enyo.kind({
     },
     refreshFeedTags: function(tags){
         this.$.feedTags.refreshList(tags);
+    },
+    refreshTags: function(tags){
+        this.$.feedTags.refreshTags(tags);
     }
 });
 
@@ -87,15 +90,24 @@ enyo.kind({
         }
     ],
     tags: [],
+    feedTags: [],
     setupItem: function(inSender, inEvent){
         var i = inEvent.index;
         
-        this.$.tag.setTag(this.articles[i]);
+        this.$.tag.setTag(this.tags[i]);
     },
-    refreshList: function(tags){
-        this.tags = tags;
+    refreshList: function(feedTags){
+        this.feedTags = feedTags;
         this.$.list.setCount(this.tags.length);
         this.$.list.refresh();
+    },
+    refreshTags: function(tags){
+        this.tags = tags;
+        this.$.list.setCount(tags.length);
+        this.$.list.refresh();
+    },
+    refreshFeedTags: function(feedTags){
+        this.feedTags = feedTags;
     }
 });
 
@@ -180,13 +192,17 @@ enyo.kind({
 
 enyo.kind({
     name: "reader.fragment.FeedTag",
-    classes: "enyo-border-box",
+    classes: "enyo-border-box list-feedtags-item",
     components: [
-        {kind: "onyx.Checkbox"},
-        {name: "name"}
+        {kind: "onyx.Checkbox", classes: "checkbox", onchange: "checkChanged"},
+        {name: "name", classes: "tagname"}
     ],
-    tag: "",
-    setName: function(name){
-        this.$.name.setContent(name);
+    feedTag: "",
+    setTag: function(tag){
+        this.feedTag = tag;
+        this.$.name.setContent(tag.name);
+    },
+    checkChanged: function(inSender){
+        console.log(inSender.getValue());
     }
 });
