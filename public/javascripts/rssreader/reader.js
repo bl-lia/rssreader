@@ -42,6 +42,10 @@ enyo.kind({
     },
     refreshArticle: function(article){
         this.$.contentPanel.refreshArticle(article);
+        
+        if(enyo.Panels.isScreenNarrow()){
+            this.next();
+        }
     },
     refreshFeedTags: function(tags){
         this.$.contentPanel.refreshFeedTags(tags);

@@ -95,6 +95,7 @@ enyo.kind({
         var i = inEvent.index;
         
         this.$.tag.setTag(this.tags[i]);
+        this.$.tag.setSelected(inSender.isSelected(i));
     },
     refreshList: function(feedTags){
         this.feedTags = feedTags;
@@ -194,7 +195,6 @@ enyo.kind({
     name: "reader.fragment.FeedTag",
     classes: "enyo-border-box list-feedtags-item",
     components: [
-        {kind: "onyx.Checkbox", classes: "checkbox", onchange: "checkChanged"},
         {name: "name", classes: "tagname"}
     ],
     feedTag: "",
@@ -202,7 +202,7 @@ enyo.kind({
         this.feedTag = tag;
         this.$.name.setContent(tag.name);
     },
-    checkChanged: function(inSender){
-        console.log(inSender.getValue());
+    setSelected: function(isSelected){
+        this.addRemoveClass("selected", isSelected);
     }
 });

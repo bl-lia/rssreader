@@ -98,6 +98,10 @@
     padding-left: 15px;
 }
 
+.list-feedtags-item .selected {
+    background-color: #c4e3fe;
+}
+
 @media all and (max-width: 800px) {
     .app-panels > * {
         min-width: 100%;
