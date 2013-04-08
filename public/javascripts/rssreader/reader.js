@@ -15,8 +15,8 @@ enyo.kind({
     refreshArticle: function(article){
         this.$.rootPanel.refreshArticle(article);
     },
-    refreshFeedTags: function(tags){
-        this.$.rootPanel.refreshFeedTags(tags);
+    refreshFeedSelectedTags: function(tags){
+        this.$.rootPanel.refreshFeedSelectedTags(tags);
     }
 });
 
@@ -43,8 +43,8 @@ enyo.kind({
     refreshArticle: function(article){
         this.$.contentPanel.refreshArticle(article);
     },
-    refreshFeedTags: function(tags){
-        this.$.contentPanel.refreshFeedTags(tags);
+    refreshFeedSelectedTags: function(tags){
+        this.$.contentPanel.refreshFeedSelectedTags(tags);
     },
     showArticlePanel: function(){
         this.next();

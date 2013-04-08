@@ -37,3 +37,5 @@
 {"ts":1365074444956,"patch":[[{"diffs":[[0,"ft;\n"],[-1,"    height: 40px;\n"],[0,"}\n\n."]],"start1":1295,"start2":1295,"length1":26,"length2":8}]],"length":1492,"saved":false}
 {"ts":1365074452941,"patch":[[{"diffs":[[0,"ont-size: 14px;\n"],[1,"    height: 40px;\n"],[0,"}\n\n.list-feedtag"]],"start1":1231,"start2":1231,"length1":32,"length2":50}]],"length":1510,"saved":false}
 {"ts":1365074662731,"patch":[[{"diffs":[[0,"height: "],[-1,"4"],[1,"8"],[0,"0px;\n}\n\n"]],"start1":1251,"start2":1251,"length1":17,"length2":17}]],"length":1510,"saved":false}
+{"contributors":[],"silentsave":false,"ts":1365419418886,"patch":[[{"diffs":[[0,"5px;\n}\n\n"],[1,".list-feedtags.item.selected {\n    background-color: #c4e3fe;\n}\n\n"],[0,"@media a"]],"start1":1387,"start2":1387,"length1":16,"length2":81}]],"length":1575,"saved":false}
+{"ts":1365419532887,"patch":[[{"diffs":[[0,"feedtags"],[-1,"."],[1,"-"],[0,"item.sel"]],"start1":1401,"start2":1401,"length1":17,"length2":17}]],"length":1575,"saved":false}

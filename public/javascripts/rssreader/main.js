@@ -9,8 +9,8 @@ enyo.kind({
             arrangerKind: "CardSlideInArranger",
             fit: true,
             components: [
-                {kind: "Scroller", name: "scroller", strategyKind: "TouchScrollStrategy", components: [
-                    {name: "articles", kind: "reader.fragment.Articles"}
+                {kind: "Scroller", strategyKind: "TouchScrollStrategy", components:[
+                    {name: "articles", kind: "reader.fragment.Articles"},
                 ]},
                 {kind: "Scroller", strategyKind: "TouchScrollStrategy", components:[
                     {name: "feedTags", kind: "reader.fragment.FeedTags"}
@@ -33,7 +33,7 @@ enyo.kind({
             this.$.articlePanel.previous();
         this.$.articles.refreshItem(article);
     },
-    refreshFeedTags: function(tags){
+    refreshFeedSelectedTags: function(tags){
         this.$.feedTags.refreshList(tags);
     },
     refreshTags: function(tags){
@@ -48,7 +48,6 @@ enyo.kind({
             name: "list",
             kind: "List",
             classes: "list-articles-list",
-            count: 0,
             onSetupItem: "setupItem",
             multiSelect: true,
             fit: true,
@@ -69,7 +68,8 @@ enyo.kind({
     refreshItem: function(data){
         this.articles = data;
         this.$.list.setCount(this.articles.length);
-        this.$.list.refresh();
+        //this.$.list.refresh();
+        this.$.list.reset();
     }
 });
 
@@ -85,29 +85,48 @@ enyo.kind({
             multiSelect: true,
             fit: true,
             components: [
-                {name: "tag", kind: "reader.fragment.FeedTag"}
+                {name: "tag", kind: "reader.fragment.FeedTag", ontap: "updateSelectedItem"}
             ]
         }
     ],
     tags: [],
-    feedTags: [],
+    selectedItem: "",
     setupItem: function(inSender, inEvent){
         var i = inEvent.index;
+        var selected = inSender.isSelected(i);
         
         this.$.tag.setTag(this.tags[i]);
-    },
-    refreshList: function(feedTags){
-        this.feedTags = feedTags;
-        this.$.list.setCount(this.tags.length);
-        this.$.list.refresh();
+        this.$.tag.addRemoveClass("selected", selected);
     },
     refreshTags: function(tags){
         this.tags = tags;
         this.$.list.setCount(tags.length);
         this.$.list.refresh();
     },
-    refreshFeedTags: function(feedTags){
-        this.feedTags = feedTags;
+    refreshFeedSelectedTags: function(selectedTags){
+        for(var i=0; i<selectedTags.length; i++){
+            var selectedTag = selectedTags[i];
+            var index = this.tags.indexOf(selectedTag);
+            if(index > -1){
+                this.$.list.select(index);
+            }
+        }
+        this.$.list.refresh();
+    },
+    updateSelectedItem: function(inSender, inEvent){
+        var tempSelected = this.$.list.getSelection().getSelected();
+        if(this.selectedItem !== tempSelected){
+            this.selectedItem = tempSelected;
+            var sendData = new Array();
+            for(var i=0; i<this.tags.length; i++){
+                if(this.selectedItem[i] !== undefined){
+                    sendData.push(this.tags[i]);
+                }
+            }
+            
+            if(sendData.length > 0) socket.emit("update feed tags", {});
+        }
+        
     }
 });
 
@@ -194,7 +213,6 @@ enyo.kind({
     name: "reader.fragment.FeedTag",
     classes: "enyo-border-box list-feedtags-item",
     components: [
-        {kind: "onyx.Checkbox", classes: "checkbox", onchange: "checkChanged"},
         {name: "name", classes: "tagname"}
     ],
     feedTag: "",
@@ -202,7 +220,4 @@ enyo.kind({
         this.feedTag = tag;
         this.$.name.setContent(tag.name);
     },
-    checkChanged: function(inSender){
-        console.log(inSender.getValue());
-    }
 });
