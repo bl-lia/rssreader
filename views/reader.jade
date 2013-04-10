@@ -13,6 +13,10 @@ heml
             var socket = io.connect(window.location.protocol + '//' + window.location.host);
             var app = new App();
 
+            socket.on('error occured', function(data){
+                console.log('error occurred:%s', data.error.stack);
+            });
+
             socket.on('load feeds done', function(data){
                 console.log('load feeds done');
                 app.refreshFeeds(data.feeds);
@@ -43,6 +47,11 @@ heml
             socket.on('refresh feed articles done', function(data){
                 console.log('refresh feed articles done');
                 app.refreshArticle(data.articles);
+            });
+
+            socket.on('load feed tags done', function(data){
+                console.log('load feed tags done');
+                app.refreshFeedSelectedTags(data.feedTags);
             });
 
             socket.emit('load feeds');

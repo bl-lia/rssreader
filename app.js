@@ -39,9 +39,16 @@ app.get('/sandbox', reader.sandbox);
 //  console.log("Express server listening on port " + app.get('port'));
 //});
 
-socketio.listen(app.listen(app.get('port')), function(){
+var s = socketio.listen(app.listen(app.get('port')), function(){
     console.log("Express server listening on port " + app.get('port') + " with socket.io");
-}).sockets.on('connection', function(socket){
+});
+
+s.sockets.on('connection', function(socket){
+    
+    socket.on('error', function(){
+        console.error('error error error');
+    });
+    
     socket.on('load feeds', function(){
         console.log('Call load feeds');
         events.loadFeeds(function(feeds){
@@ -86,8 +93,15 @@ socketio.listen(app.listen(app.get('port')), function(){
     
     socket.on('update feed tags', function(data){
         console.log('Call update feed tags');
-        events.updateFeedTags(data.feed._id, data.feed.feedTags, function(){
+        events.updateFeedTags(data.feedId, data.feedTags, function(){
             socket.emit('update feed tags done');
+        });
+    });
+    
+    socket.on('load feed tags', function(data){
+        console.log('Call load feed tags');
+        events.loadFeedTags(data.feedId, function(feed){
+            socket.emit('load feed tags done', {feedTags: feed.feedTags});
         });
     });
 });

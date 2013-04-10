@@ -119,6 +119,7 @@ enyo.kind({
         var i = inEvent.index;
         
         socket.emit('load feed articles', {feed: this.feeds[i]});
+        socket.emit('load feed tags', {feedId: this.feeds[i]._id});
     },
     refreshList: function(){
         this.$.list.setCount(this.feeds.length);

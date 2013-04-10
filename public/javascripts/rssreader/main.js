@@ -13,12 +13,13 @@ enyo.kind({
                     {name: "articles", kind: "reader.fragment.Articles"},
                 ]},
                 {kind: "Scroller", strategyKind: "TouchScrollStrategy", components:[
-                    {name: "feedTags", kind: "reader.fragment.FeedTags"}
+                    {name: "feedTags", kind: "reader.fragment.FeedTags", onUpdateSelectedItem: "updateSelectedTag"}
                 ]}
             ]
         },
         {kind: "reader.fragment.ArticleToolbar", name: "articleBar", onShowTagPanel: "showTagPanel"},
     ],
+    feed: "",
     showTagPanel: function(){
         if(this.$.articlePanel.index === 0)
             this.$.articlePanel.next();
@@ -26,6 +27,7 @@ enyo.kind({
             this.$.articlePanel.previous();
     },
     setFeed: function(feed){
+        this.feed = feed;
         this.$.articleBar.setFeed(feed);
     },
     refreshArticle: function(article){
@@ -34,10 +36,13 @@ enyo.kind({
         this.$.articles.refreshItem(article);
     },
     refreshFeedSelectedTags: function(tags){
-        this.$.feedTags.refreshList(tags);
+        this.$.feedTags.refreshFeedSelectedTags(tags);
     },
     refreshTags: function(tags){
         this.$.feedTags.refreshTags(tags);
+    },
+    updateSelectedTag: function(inSender, inEvent){
+        socket.emit("update feed tags", {feedId: this.feed._id, feedTags: inEvent.selectedItem});
     }
 });
 
@@ -68,13 +73,15 @@ enyo.kind({
     refreshItem: function(data){
         this.articles = data;
         this.$.list.setCount(this.articles.length);
-        //this.$.list.refresh();
-        this.$.list.reset();
+        this.$.list.refresh();
     }
 });
 
 enyo.kind({
     name: "reader.fragment.FeedTags",
+    events: {
+        onUpdateSelectedItem: "",
+    },
     components: [
         {
             name: "list",
@@ -106,27 +113,31 @@ enyo.kind({
     refreshFeedSelectedTags: function(selectedTags){
         for(var i=0; i<selectedTags.length; i++){
             var selectedTag = selectedTags[i];
-            var index = this.tags.indexOf(selectedTag);
-            if(index > -1){
-                this.$.list.select(index);
+            
+            for(var s=0; s<this.tags.length; s++){
+                if(this.tags[s]._id == selectedTag)
+                    this.$.list.select(s);
             }
         }
         this.$.list.refresh();
     },
     updateSelectedItem: function(inSender, inEvent){
-        var tempSelected = this.$.list.getSelection().getSelected();
-        if(this.selectedItem !== tempSelected){
-            this.selectedItem = tempSelected;
-            var sendData = new Array();
-            for(var i=0; i<this.tags.length; i++){
-                if(this.selectedItem[i] !== undefined){
-                    sendData.push(this.tags[i]);
+        var updFeeds = function(feedtags){
+            var listSelected = feedtags.$.list.getSelection().getSelected();
+            if(feedtags.selectedItem !== listSelected){
+                feedtags.selectedItem = listSelected;
+                var sendData = new Array();
+                for(var i=0; i<feedtags.tags.length; i++){
+                    if(feedtags.selectedItem[i] !== undefined){
+                        sendData.push(feedtags.tags[i]);
+                    }
                 }
+                
+                feedtags.doUpdateSelectedItem({selectedItem: sendData});
             }
-            
-            if(sendData.length > 0) socket.emit("update feed tags", {});
-        }
+        };
         
+        setTimeout(updFeeds, 2000, this);
     }
 });
 

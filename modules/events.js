@@ -17,8 +17,9 @@ Events.loadTags = function(callback){
     });
 };
 
-Events.loadFeedTags = function(callback){
+Events.loadFeedTags = function(feedId, callback){
     console.log('/modules/events.js:Call Events.loadFeedTags');
+    reader.loadFeedTags(feedId, callback);
 };
 
 Events.loadFeedArticles = function(feedId, callback){

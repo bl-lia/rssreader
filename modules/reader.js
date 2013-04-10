@@ -3,6 +3,10 @@ var feedparser = require('feedparser')
     , schema   = require('./schema');
     
 mongoose.connect('mongodb://localhost/rssreader');
+mongoose.connection.on('error', function(err){
+    console.error('error occurred');
+    throw err;
+});
 
 function Reader(){
 }
@@ -40,7 +44,9 @@ Reader.load = function(callback){
     console.log("Call Reader.load");
     var Feed = mongoose.model('Feed');
     Feed.find(function(err, feeds){
-        callback(feeds);
+        if(err) throw err;
+        else
+            callback(feeds);
     });
 };
 
@@ -54,9 +60,14 @@ Reader.loadTags = function(callback){
     });
 };
 
-Reader.loadFeedTags = function(callback){
+Reader.loadFeedTags = function(feedId, callback){
     console.log('/modules/reader.js:Call Reader.loadFeedTags');
-    var Tag = mongoose.model('Tag');
+    var Feed = mongoose.model('Feed');
+    Feed.findOne({_id: new mongoose.Types.ObjectId(feedId)}, function(err, feed){
+        if(err) throw err;
+        else
+            if(callback !== undefined) callback(feed);
+    });
 };
 
 Reader.addTag = function(tagname, callback){
@@ -67,7 +78,7 @@ Reader.addTag = function(tagname, callback){
     });
     
     tag.save(function(err, t){
-        if(err) console.err(err);
+        if(err) throw err;
         else{
             console.log('Success to save tag.');
             if(callback !== undefined)
@@ -92,7 +103,7 @@ Reader.addFeed = function(url, callback){
                 console.log('Add feed. %s - %s - %s', meta.title, meta.link, meta.xmlUrl);
                 
                 feed.save(function(err, f){
-                    if(err) console.error(err);
+                    if(err) throw err;
                     else{
                         console.log('Success to save feed.');
                         callback(f, articles);
@@ -119,7 +130,7 @@ Reader.addArticles = function(feed, articles, callback){
         });
         
         a.save(function(err, a){
-            if(err) console.error(err);
+            if(err) throw err;
             else{
                 arr.push(a);
                 endCount++;
@@ -146,27 +157,32 @@ Reader.getFeedArticles = function(feedId, limit, callback){
 Reader.getNewArticles = function(feedId, callback){
     var Feed = mongoose.model('Feed');
     Feed.findById(new mongoose.Types.ObjectId(feedId), function(err, feed){
-        console.log(feed);
-        if(feed.xmlUrl !== null)
-            feedparser.parseUrl(feed.xmlUrl, function(err, meta, articles){
-                callback(err, meta, articles, feed);
-            });
+        if(err) throw err;
+        else{
+            if(feed.xmlUrl !== null)
+                feedparser.parseUrl(feed.xmlUrl, function(err, meta, articles){
+                    callback(err, meta, articles, feed);
+                });
+        }
     });
 };
 
 Reader.updateFeedTags = function(feedId, feedTags, callback){
+    var tags = new Array();
+    for(var i=0; i<feedTags.length; i++){
+        var t = feedTags[i];
+        tags.push(t._id);
+    }
     var Feed = mongoose.model('Feed');
     Feed.update(
         {_id: new mongoose.Types.ObjectId(feedId)},
-        {feedTags: feedTags},
+        {feedTags: tags},
         {safe: true},
         function(err, numberAffected, raw){
-            if(err) console.error(err);
+            if(err) throw err;
             else
                if(callback !== undefined) callback();
         });
 };
-
-
 
 exports = module.exports = Reader;

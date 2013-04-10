@@ -117,3 +117,4 @@
 {"ts":1365056063693,"patch":[[{"diffs":[[0,"eeds);\r\n    },\r\n"],[1,"    refreshTags: function(tags){\r\n        \r\n    }\r\n"],[0,"    showArticleP"]],"start1":365,"start2":365,"length1":32,"length2":83}]],"length":6883,"saved":false}
 {"ts":1365056065743,"patch":[[{"diffs":[[0,"     \r\n    }"],[1,","],[0,"\r\n    showAr"]],"start1":418,"start2":418,"length1":24,"length2":25}]],"length":6884,"saved":false}
 {"ts":1365056086747,"patch":[[{"diffs":[[0,"){\r\n        "],[1,"this.$.feeds.refreshTagList(tags);"],[0,"\r\n    },\r\n  "]],"start1":411,"start2":411,"length1":24,"length2":58}]],"length":6918,"saved":false}
+{"contributors":[],"silentsave":false,"ts":1365517741370,"patch":[[{"diffs":[[0,"is.feeds[i]});\r\n"],[1,"        socket.emit('load feed tags', {feedId: this.feeds[i]._id});\r\n"],[0,"    },\r\n    refr"]],"start1":3753,"start2":3753,"length1":32,"length2":101}]],"length":6987,"saved":false}
