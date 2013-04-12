@@ -185,4 +185,13 @@ Reader.updateFeedTags = function(feedId, feedTags, callback){
         });
 };
 
+Reader.getTaggedFeeds = function(tagId, callback){
+    var Feed = mongoose.model('Feed');
+    Feed.find({feedTags: {$in: [new mongoose.Types.ObjectId(tagId)]}}, function(err, feeds){
+        if(err) throw err;
+        else
+            if(callback !== undefined) callback(feeds);
+    });
+};
+
 exports = module.exports = Reader;
