@@ -13,7 +13,7 @@ enyo.kind({
                     {name: "articles", kind: "reader.fragment.Articles"},
                 ]},
                 {kind: "Scroller", strategyKind: "TouchScrollStrategy", components:[
-                    {name: "feedTags", kind: "reader.fragment.FeedTags", onUpdateSelectedItem: "updateSelectedTag"}
+                    {name: "feedTags", kind: "reader.fragment.FeedTags", onUpdateSelectedItem: "updateSelectedTag", onResetFeedTagData: "refreshFeedData"}
                 ]}
             ]
         },
@@ -21,8 +21,10 @@ enyo.kind({
     ],
     feed: "",
     showTagPanel: function(){
-        if(this.$.articlePanel.index === 0)
+        if(this.$.articlePanel.index === 0){
             this.$.articlePanel.next();
+            this.refreshFeedTags();
+        }
         else
             this.$.articlePanel.previous();
     },
@@ -43,6 +45,14 @@ enyo.kind({
     },
     updateSelectedTag: function(inSender, inEvent){
         socket.emit("update feed tags", {feedId: this.feed._id, feedTags: inEvent.selectedItem});
+    },
+    refreshFeedTags: function(){
+        this.$.feedTags.refreshFeedTags();
+    },
+    refreshFeedData: function(inSender, inEvent){
+        setTimeout(function(){
+            console.log("main.js:refreshFeedData");
+        }, 2000);
     }
 });
 
@@ -88,7 +98,6 @@ enyo.kind({
         this.render();
     },
     showTags: function(){
-        console.log("aaa");
         this.doShowTagPanel();
     }
 });

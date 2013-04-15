@@ -2,6 +2,7 @@ enyo.kind({
     name: "reader.fragment.FeedTags",
     events: {
         onUpdateSelectedItem: "",
+        onResetFeedTagData: "",
     },
     components: [
         {
@@ -24,7 +25,7 @@ enyo.kind({
         var selected = inSender.isSelected(i);
         
         this.$.tag.setTag(this.tags[i]);
-        this.$.tag.addRemoveClass("selected", selected);
+        this.$.tag.addRemoveClass("selected", selected === true);
     },
     refreshTags: function(tags){
         this.tags = tags;
@@ -32,6 +33,10 @@ enyo.kind({
         this.$.list.refresh();
     },
     refreshFeedSelectedTags: function(selectedTags){
+        for(var i=0; i<this.tags.length; i++){
+            this.$.list.deselect(i);
+        }
+        
         for(var i=0; i<selectedTags.length; i++){
             var selectedTag = selectedTags[i];
             
@@ -59,6 +64,10 @@ enyo.kind({
         };
         
         setTimeout(updFeeds, 2000, this);
+    },
+    refreshFeedTags: function(){
+        this.doResetFeedTagData();
+        console.log("feedtag.js:refreshFeedTags");
     }
 });
 
