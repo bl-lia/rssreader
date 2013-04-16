@@ -45,6 +45,11 @@ var s = socketio.listen(app.listen(app.get('port')), function(){
 
 s.sockets.on('connection', function(socket){
     
+    socket.on('ping server', function(){
+        console.log('Call ping server');
+        socket.emit('ping server done', {result: 'success'});
+    });
+    
     socket.on('error', function(){
         console.error('error error error');
     });
