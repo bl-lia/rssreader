@@ -7,12 +7,12 @@
 }
 
 .panel-collapsible > * {
-    /*min-width: 250px;*/
-    /*max-width: 250px;*/
+    min-width: 250px;
+    max-width: 250px;
 }
 
 .panel-main {
-    max-width: 100%;
+    /*max-width: 100%;*/
 }
 
 .panel-nav {
@@ -20,8 +20,8 @@
 }
 
 .list-feeds-list {
-    min-width: 300px;
-    max-width: 600px;
+    /*min-width: 300px;*/
+    /*max-width: 600px;*/
 	margin: auto;
 	background-color: #eee;
 }
@@ -34,8 +34,8 @@
 }
 
 .list-tags-list {
-    min-width: 300px;
-    max-width: 600px;
+    /*min-width: 300px;*/
+    /*max-width: 600px;*/
     margin: auto;
 	background-color: #eee;
 }
@@ -102,7 +102,7 @@
     background-color: #c4e3fe;
 }
 
-@media all and (max-width: 800px) {
+@media screen and (max-device-width: 800px) {
     .app-panels > * {
         min-width: 100%;
         max-width: 100%;

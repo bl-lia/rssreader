@@ -67,6 +67,12 @@ enyo.kind({
     components: [
         {name: "name"},
         {
+            name: "backButton",
+            kind: "onyx.Button",
+            content: "<-",
+            ontap: "backPage"
+        },
+        {
             name: "refreshButton",
             kind: "onyx.Button",
             content: "Refresh",
@@ -80,6 +86,12 @@ enyo.kind({
         }
     ],
     feed: null,
+    create: function(){
+        this.inherited(arguments);
+        if(!enyo.Panels.isScreenNarrow()){
+            this.$.backButton.hide();
+        }
+    },
     refreshArticles: function(){
         if(this.feed !== null){
             socket.emit('refresh feed articles', {feed: this.feed});
