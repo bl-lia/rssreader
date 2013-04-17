@@ -1,5 +1,6 @@
 var reader = require('./reader')
-   ,moment = require('moment');
+   ,moment = require('moment')
+   ,async  = require('async');
 
 function Events(){}
 
@@ -55,6 +56,20 @@ Events.fetchArticles = function(feedId, callback){
     });
 };
 
+Events.fetchTaggedArticles = function(tagId, callback){
+    console.log('/modules/events.js:Call Events.fetchTaggedArticles');
+    reader.getTaggedFeeds(tagId, function(feeds){
+        async.each(feeds,
+                    function(feed){
+                        console.log(feed);
+                        Events.fetchArticles(feed._id.toString());
+                    },
+                    function(err){
+                        Events.loadTaggedArticles(tagId, callback);
+                    });
+    });
+};
+
 Events.addTag = function(tagname, callback){
     reader.addTag(tagname, function(tag){
         if(callback !== undefined)
@@ -72,6 +87,17 @@ Events.addFeed = function(url, callback){
 Events.updateFeedTags = function(feedId, feedTags, callback){
     console.log('/modules/events.js:Call Events.updateFeedTags');
     reader.updateFeedTags(feedId, feedTags, callback);
+};
+
+Events.loadTaggedArticles = function(tagId, callback){
+    console.log('/modules/events.js:Call Events.loadTaggedArticles');
+    reader.getTaggedFeeds(tagId, function(feeds){
+        var feedIds = new Array();
+        for(var i=0; i<feeds.length; i++){
+            feedIds.push(feeds[i]._id);
+        }
+        reader.getFeedsArticles(feedIds, 30, callback);
+    });
 };
 
 exports = module.exports = Events;

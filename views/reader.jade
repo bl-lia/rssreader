@@ -40,7 +40,6 @@ heml
 
             socket.on('load feed articles done', function(data){
                 console.log('load feed articles done');
-                console.log(data);
                 app.setFeed(data.feed);
                 app.refreshArticle(data.articles);
             });
@@ -53,6 +52,17 @@ heml
             socket.on('load feed tags done', function(data){
                 console.log('load feed tags done');
                 app.refreshFeedSelectedTags(data.feedTags);
+            });
+
+            socket.on('load tagged articles done', function(data){
+                console.log('load feed tags done');
+                app.setFeedTag(data.tag);
+                app.refreshTagArticles(data.tag, data.articles);
+            });
+
+            socket.on('refresh tagged articles done', function(data){
+                console.log('refresh tagged articles done');
+                app.refreshTagArticles(data.tag, data.articles);
             });
 
             socket.emit('load feeds');

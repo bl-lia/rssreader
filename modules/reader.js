@@ -154,6 +154,28 @@ Reader.getFeedArticles = function(feedId, limit, callback){
             .exec(callback);
 };
 
+Reader.getFeedsArticles = function(feedIds, limit, callback){
+    console.log('reader.js:Reader.getFeedArticles:feedIds=%s', feedIds);
+    if('number' != typeof limit){
+        limit = 30;
+    }
+    
+    var arr = new Array();
+    for(var i=0; i<feedIds.length; i++){
+        arr.push(feedIds[i]);
+    }
+    
+    var Article = mongoose.model('Article');
+    Article.find({feedId: {$in: arr} })
+            .sort({date: 'desc'})
+            .limit(limit)
+            .exec(function(err, articles){
+                if(err) throw err;
+                else
+                    if(callback !== undefined) callback(articles);
+            });
+};
+
 Reader.getNewArticles = function(feedId, callback){
     var Feed = mongoose.model('Feed');
     Feed.findById(new mongoose.Types.ObjectId(feedId), function(err, feed){

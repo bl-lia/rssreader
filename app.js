@@ -45,6 +45,11 @@ var s = socketio.listen(app.listen(app.get('port')), function(){
 
 s.sockets.on('connection', function(socket){
     
+    socket.on('ping server', function(){
+        console.log('Call ping server');
+        socket.emit('ping server done', {result: 'success'});
+    });
+    
     socket.on('error', function(){
         console.error('error error error');
     });
@@ -102,6 +107,20 @@ s.sockets.on('connection', function(socket){
         console.log('Call load feed tags');
         events.loadFeedTags(data.feedId, function(feed){
             socket.emit('load feed tags done', {feedTags: feed.feedTags});
+        });
+    });
+    
+    socket.on('load tagged articles', function(data){
+        console.log('Call load tagged articles');
+        events.loadTaggedArticles(data.tag._id, function(articles){
+            socket.emit('load tagged articles done', {tag: data.tag, articles: articles});
+        });
+    });
+
+    socket.on('refresh tagged articles', function(data){
+        console.log('Call refresh tagged articles.');
+        events.fetchTaggedArticles(data.tag._id, function(articles){
+            socket.emit('refresh tagged articles done', {tag: data.tag, articles: articles});
         });
     });
 });

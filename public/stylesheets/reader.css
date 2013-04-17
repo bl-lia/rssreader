@@ -44,7 +44,11 @@
     border: 1px solid silver;
     padding: 18px;
     font-size: 18px;
-	font-weight: bold;
+    font-weight: bold;
+}
+
+.list-tags-item-selected {
+    background-color: #c4e3fe;
 }
 
 .list-feeds-item-selected {

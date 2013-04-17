@@ -19,7 +19,8 @@ enyo.kind({
         },
         {kind: "reader.fragment.ArticleToolbar", name: "articleBar", onShowTagPanel: "showTagPanel"},
     ],
-    feed: "",
+    feed: null,
+    feedtag: null,
     showTagPanel: function(){
         if(this.$.articlePanel.index === 0){
             this.$.articlePanel.next();
@@ -30,7 +31,13 @@ enyo.kind({
     },
     setFeed: function(feed){
         this.feed = feed;
+        this.feedtag = null;
         this.$.articleBar.setFeed(feed);
+    },
+    setFeedTag: function(tag){
+        this.feed = null;
+        this.feedtag = tag;
+        this.$.articleBar.setFeedTag(tag);
     },
     refreshArticle: function(article){
         if(this.$.articlePanel.index === 1)
@@ -86,6 +93,7 @@ enyo.kind({
         }
     ],
     feed: null,
+    feedtag: null,
     create: function(){
         this.inherited(arguments);
         if(!enyo.Panels.isScreenNarrow()){
@@ -95,10 +103,17 @@ enyo.kind({
     refreshArticles: function(){
         if(this.feed !== null){
             socket.emit('refresh feed articles', {feed: this.feed});
+        }else if(this.feedtag !== null){
+            socket.emit('refresh tagged articles', {tag: this.feedtag});
         }
     },
     setFeed: function(feed){
         this.feed = feed;
+        this.feedtag = null;
+    },
+    setFeedTag: function(tag){
+        this.feed = null;
+        this.feedtag = tag;
     },
     setupItem: function(inSender, inEvent){
         this.$.menuitem.setContent("aaaa");
