@@ -1,6 +1,7 @@
 enyo.kind({
     name: "reader.fragment.MainPanel",
     kind: "FittableRows",
+    classes: "panel-main",
     components: [
         {
             kind: "Panels",
@@ -72,7 +73,6 @@ enyo.kind({
         onShowTagPanel:""
     },
     components: [
-        {name: "name"},
         {
             name: "backButton",
             kind: "onyx.Button",
@@ -90,7 +90,9 @@ enyo.kind({
             kind: "onyx.Button",
             content: "Tags",
             ontap: "showTags"
-        }
+        },
+        {name: "name"},
+        {kind: "Signals", onChangeArticleSource: "changeArticleSource"},
     ],
     feed: null,
     feedtag: null,
@@ -102,8 +104,10 @@ enyo.kind({
     },
     refreshArticles: function(){
         if(this.feed !== null){
+            console.log('socket.emit:refresh feed articles');
             socket.emit('refresh feed articles', {feed: this.feed});
         }else if(this.feedtag !== null){
+            console.log('socket.emit:refresh tagged articles');
             socket.emit('refresh tagged articles', {tag: this.feedtag});
         }
     },
@@ -126,5 +130,10 @@ enyo.kind({
     },
     showTags: function(){
         this.doShowTagPanel();
+    },
+    changeArticleSource: function(inSender, inEvent){
+        var name = inEvent.name;
+        
+        this.$.name.setContent(name);
     }
 });

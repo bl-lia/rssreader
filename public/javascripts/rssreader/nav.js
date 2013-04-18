@@ -37,8 +37,8 @@ enyo.kind({
                     arrangerKind: "CardSlideInArranger",
                     fit: true,
                     components: [
-                        {name: "feedlist", kind: "reader.fragments.FeedList"},
-                        {name: "taglist", kind: "reader.fragments.TagList"}
+                        {name: "feedlist", kind: "reader.fragments.FeedList", onSelectFeed: "selectFeed"},
+                        {name: "taglist", kind: "reader.fragments.TagList", onSelectFeedTag: "selectFeedTag"}
                     ]
                 },
             ]
@@ -84,11 +84,20 @@ enyo.kind({
     },
     showArticles: function(inSender, inEvent){
         this.doShowArticlepanel();
+    },
+    selectFeedTag: function(inSender, inEvent){
+        this.$.feedlist.resetSelections();
+    },
+    selectFeed: function(inSender, inEvent){
+        this.$.taglist.resetSelections();
     }
 });
 
 enyo.kind({
     name: "reader.fragments.FeedList",
+    events: {
+        onSelectFeed: "",
+    },
     components: [{
         name: "list",
         kind: "List",
@@ -120,15 +129,27 @@ enyo.kind({
         
         socket.emit('load feed articles', {feed: this.feeds[i]});
         socket.emit('load feed tags', {feedId: this.feeds[i]._id});
+        
+        enyo.Signals.send("onChangeArticleSource", {name: this.feeds[i].name});
+        
+        this.doSelectFeed();
     },
     refreshList: function(){
         this.$.list.setCount(this.feeds.length);
         this.$.list.refresh();
+    },
+    resetSelections: function(){
+        for(var i=0; i<this.feeds.length; i++){
+            this.$.list.deselect(i);
+        }
     }
 });
 
 enyo.kind({
     name: "reader.fragments.TagList",
+    events: {
+        onSelectFeedTag: "",
+    },
     components: [{
         name: "list",
         kind: "List",
@@ -157,10 +178,17 @@ enyo.kind({
         var i = inEvent.index;
         
         socket.emit('load tagged articles', {tag: this.tags[i]});
+        enyo.Signals.send('onChangeArticleSource', {name: this.tags[i].name});
+        this.doSelectFeedTag();
     },
     refreshList: function(){
         this.$.list.setCount(this.tags.length);
         this.$.list.refresh();
+    },
+    resetSelections: function(){
+        for(var i=0; i<this.tags.length; i++){
+            this.$.list.deselect(i);
+        }
     }
 });
 
