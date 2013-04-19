@@ -82,6 +82,10 @@
     float: left;
 }
 
+.list-article-link {
+    text-align: left;
+}
+
 .list-article-date {
     text-align: right;
 }

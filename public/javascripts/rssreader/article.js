@@ -34,9 +34,9 @@ enyo.kind({
     classes: "enyo-border-box expandable list-articles-item",
     components: [
         {name: "title", classes: "list-article-title"},
+        {content: "original", classes: "list-article-link"},
         {name: "date", classes: "list-article-date"},
         {name: "content", classes: "list-article-content", components: [
-            {name: "contentTitle", tag: "a", ontap: "openLink"},
             {name: "description", classes: "description", allowHtml: true}
         ]}
     ],
@@ -54,7 +54,6 @@ enyo.kind({
             this.$.date.setContent(moment(article.date).format("HH:mm"));
 
         this.$.title.setContent(article.title);
-        this.$.contentTitle.setContent(article.title);
         this.$.description.setContent(article.description);
     },
     openLink: function(inSender, inEvent){
